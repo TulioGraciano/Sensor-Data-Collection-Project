@@ -39,6 +39,7 @@ export function ReadData(readings){
         
 }
     return {
+        Total: readings.length,
         geral:{alert: alert, normal: normal, critical: critical},
         porTipo:{tempAlert,pressAlert,tempCritical,pressCritical}
     };
