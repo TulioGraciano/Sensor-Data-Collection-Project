@@ -1,10 +1,11 @@
-//Process Control Parameters
+
+// Function to read data and classify it into alert, normal, and critical categories based on temperature and pressure thresholds
+function ReadData(data){
+    //Process Control Parameters
     let TempMinAllowed = 10;
     let TempMaxAllowed = 80;
     let PressMinAllowed = 980;
     let PressMaxAllowed = 1050;
-// Function to read data and classify it into alert, normal, and critical categories based on temperature and pressure thresholds
-function ReadData(data){
     let cont = 0;
     let alert = 0;
     let normal=0;
