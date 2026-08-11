@@ -1,11 +1,8 @@
 
+import { Params } from "./configs.js";
 // Function to read data and classify it into alert, normal, and critical categories based on temperature and pressure thresholds
 export function ReadData(readings){
     //Process Control Parameters
-    let TempMinAllowed = 10;
-    let TempMaxAllowed = 80;
-    let PressMinAllowed = 980;
-    let PressMaxAllowed = 1050;
     let cont = 0;
     let alert = 0;
     let normal=0;
@@ -15,34 +12,34 @@ export function ReadData(readings){
     let tempCritical = [];
     let pressCritical = [];
     for(let i = 0; i < readings.length; i++){
-        switch(true){
-            case (readings[i].temperatura <TempMinAllowed || readings[i].pressao <PressMinAllowed):
+        if(readings[i].temperatura <Params.TempMinAllowed || readings[i].pressao <Params.PressMinAllowed){
                 alert++;
-                if(readings[i].temperatura <TempMinAllowed){
+                if(readings[i].temperatura <Params.TempMinAllowed){
                     tempAlert.push({Temperature: readings[i].temperatura, Timestamp: readings[i].timestamp});
                 }else{
                     pressAlert.push({Pressure: readings[i].pressao, Timestamp: readings[i].timestamp});
                 }
-                break;
-            case (readings[i].temperatura >TempMinAllowed && readings[i].temperatura <TempMaxAllowed && readings[i].pressao >PressMinAllowed && readings[i].pressao <PressMaxAllowed):
-                normal++;
-                break;
-            case (readings[i].temperatura >TempMaxAllowed || readings[i].pressao >PressMaxAllowed):
+        } else if((readings[i].temperatura >Params.TempMinAllowed && readings[i].temperatura <Params.TempMaxAllowed && readings[i].pressao >Params.PressMinAllowed && readings[i].pressao <Params.PressMaxAllowed)){
+                    normal++;
+
+        } else{
                 critical++;
-                if(readings[i].temperatura >TempMaxAllowed){
+                if(readings[i].temperatura > Params.TempMaxAllowed){
                     tempCritical.push({Temperature: readings[i].temperatura, Timestamp: readings    [i].timestamp});
                 }else{
                     pressCritical.push({Pressure: readings[i].pressao, Timestamp: readings[i].timestamp});
                 }
-                break;
+
+        }
         }
         
-}
+
     return {
         Total: readings.length,
         geral:{alert: alert, normal: normal, critical: critical},
         porTipo:{tempAlert,pressAlert,tempCritical,pressCritical}
     };
-};
+}
+
 
 
