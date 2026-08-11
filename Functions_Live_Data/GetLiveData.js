@@ -11,3 +11,5 @@ function DataGenerator(){
         sensor_ID: sensor_ID
     };
 }
+
+console.log(DataGenerator());
